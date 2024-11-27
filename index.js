@@ -13,17 +13,24 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
     next();
 });
-app.all('*', async (req, res) => {
-    console.log(`Received request for: ${req.originalUrl}`);
-    try {
-        const host = 'https://nexge.glomil.com/api';
-        const targetUrl = `${host}${req.originalUrl}`;
+app.all('/:type/*', async (req, res) => {
+    const type = req.params.type
 
+    try {
+        const hosts = {
+            nexge: 'https://nexge.glomil.com/api',
+            nexgest: 'https://nexge-st.glomil.com/api',
+            wap : 'https://wap-storage-api.asggrup.com',
+            jsonplaceholder: 'https://jsonplaceholder.typicode.com'
+        }
+        const host = hosts[type];
+        const targetUrl = `${host}${req.originalUrl.replace('/'+type, '')}`;
+
+        console.log(targetUrl, req.method)
         const axiosConfig = {
             method: req.method.toLowerCase(),
             url: targetUrl,
             headers: { 'Content-Type': 'application/json' },
-            data: req.body,
         };
 
         const response = await axios(axiosConfig);
