@@ -16,7 +16,7 @@ app.use((req, res, next) => {
 app.all('*', async (req, res) => {
     console.log(`Received request for: ${req.originalUrl}`);
     try {
-        const host = 'https://nexge-st.glomil.com/api';
+        const host = 'https://nexge.glomil.com/api';
         const targetUrl = `${host}${req.originalUrl}`;
 
         const axiosConfig = {
