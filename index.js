@@ -15,10 +15,9 @@ app.use((req, res, next) => {
 
 app.all('*', async (req, res) => {
     try {
-        const protocol = req.protocol;
-        const host = req.get('host');
+        const host = "https://nexge-st.glomil.com/api";
 
-        const targetUrl = `${protocol}://${host}${req.originalUrl}`;
+        const targetUrl = `${host}${req.originalUrl}`;
         const axiosConfig = {
             method: req.method.toLowerCase(),
             url: targetUrl,
